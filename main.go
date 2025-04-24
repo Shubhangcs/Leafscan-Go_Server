@@ -21,7 +21,9 @@ type DetectionResponse struct {
 	UserId        string `json:"user_id"`
 	Query         string `json:"query"`
 	GenAiResponse string `json:"gen_ai_response"`
+	ChatID        string `json:"chat_id"` // <-- Add this line
 }
+
 
 type OllamaResponse struct {
 	Response string `json:"response"`
@@ -42,8 +44,8 @@ func main() {
 	firestoreClient = client
 
 	http.HandleFunc("/detect", detectHandler)
-	log.Println("Server running at :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Server running at :9000")
+	log.Fatal(http.ListenAndServe(":9000", nil))
 }
 
 func detectHandler(w http.ResponseWriter, r *http.Request) {
@@ -105,6 +107,7 @@ func detectHandler(w http.ResponseWriter, r *http.Request) {
 		UserId:        userId,
 		Query:         leafName,
 		GenAiResponse: aiResponse,
+		ChatID: chatID,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
