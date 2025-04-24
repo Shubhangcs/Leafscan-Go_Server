@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"log"
 	"mime/multipart"
@@ -121,6 +122,7 @@ func readFileData(file multipart.File) ([]byte, error) {
 }
 
 func requestFlaskDetectionServer(imageData []byte) (string, error) {
+	fmt.Println("hii")
 	var buf bytes.Buffer
 	writer := multipart.NewWriter(&buf)
 
@@ -151,6 +153,7 @@ func requestFlaskDetectionServer(imageData []byte) (string, error) {
 	}
 
 	body, err := io.ReadAll(res.Body)
+	fmt.Println(body)
 	if err != nil {
 		return "", err
 	}
@@ -213,7 +216,6 @@ func storeInFirestore(userId, chatID, plantName, message string) error {
 		Collection("chat").
 		Doc(chatID)
 
-	// Create chat metadata with plant name
 	_, err := chatRef.Set(ctx, map[string]interface{}{
 		"name": plantName,
 	})
@@ -221,7 +223,6 @@ func storeInFirestore(userId, chatID, plantName, message string) error {
 		return err
 	}
 
-	// Add the message to "messages" subcollection
 	_, err = chatRef.Collection("messages").NewDoc().Set(ctx, map[string]interface{}{
 		"message":   message,
 		"timestamp": time.Now(),
