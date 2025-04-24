@@ -223,6 +223,7 @@ func storeInFirestore(userId, chatID, plantName, message string) error {
 		"message":   message,
 		"timestamp": time.Now(),
 		"user_id":   userId,
+		"user_type": "AI",
 	})
 	return err
 }
