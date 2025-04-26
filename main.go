@@ -135,7 +135,7 @@ func requestFlaskDetectionServer(imageData []byte) (string, error) {
 	}
 	writer.Close()
 
-	req, err := http.NewRequest("POST", "http://localhost:5000/predict", &buf)
+	req, err := http.NewRequest("POST", "http://34.172.219.173:5000/predict", &buf)
 	if err != nil {
 		return "", err
 	}
@@ -172,15 +172,16 @@ func requestFlaskDetectionServer(imageData []byte) (string, error) {
 }
 
 func ollamaInformationModel(prompt string) (string, error) {
-	body, err := json.Marshal(map[string]string{
-		"model":  "llama3.2",
+	body, err := json.Marshal(map[string]any{
+		"model":  "tinyllama",
 		"prompt": prompt,
+		"stream": false,
 	})
 	if err != nil {
 		return "", err
 	}
 
-	res, err := http.Post("http://localhost:11434/api/generate", "application/json", bytes.NewBuffer(body))
+	res, err := http.Post("http://34.172.219.173:11434/api/generate", "application/json", bytes.NewBuffer(body))
 	if err != nil {
 		return "", err
 	}
