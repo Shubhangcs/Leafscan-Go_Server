@@ -122,7 +122,7 @@ func readFileData(file multipart.File) ([]byte, error) {
 }
 
 func requestFlaskDetectionServer(imageData []byte) (string, error) {
-	fmt.Println("hii")
+	fmt.Println("hii"
 	var buf bytes.Buffer
 	writer := multipart.NewWriter(&buf)
 
