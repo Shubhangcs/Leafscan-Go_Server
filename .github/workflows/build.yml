@@ -1,0 +1,30 @@
+name: Verifying The Code
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Golang
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+
+      - name: Verifying Golang Installation
+        run: go version
+
+      - name: Install Required Dependencies
+        run: go mod tidy
+
+      - name: Run The Build Command
+        run: go build ./...
+
+      - name: Running The Code And Testing
+        run: go test ./... -v
