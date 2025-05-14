@@ -165,7 +165,7 @@ func requestFlaskDetectionServer(imageData []byte) (string, error) {
 
 	label, ok := result["predicted_label"].(string)
 	if !ok {
-		return "", errors.New("No label returned")
+		return "", errors.New("No label")
 	}
 
 	return label, nil
